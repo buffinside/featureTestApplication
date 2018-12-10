@@ -87,7 +87,8 @@ public class SystemUtil {
 //    }
 
     public static void showSystemParameter(Activity activity) {
-        String TAG = "系统参数：";
+        String TAG = "mainactivity";
+        Log.e(TAG, "系统参数：");
         Log.e(TAG, "手机厂商：" + SystemUtil.getDeviceBrand());
         Log.e(TAG, "手机型号：" + SystemUtil.getSystemModel());
         Log.e(TAG, "手机当前系统语言：" + SystemUtil.getSystemLanguage());
@@ -137,19 +138,18 @@ public class SystemUtil {
      * https://stackoverflow.com/questions/20697008/how-to-get-device-aosp-build-number-in-android-devices-programmatically
      * @return json格式的字符串表示的设备详细信息
      */
-    public static String getDeviceDetail(){
+    public static String getUserInfo(){
         String mString = "";
 
         mString = mString.concat("\n{")
-                        .concat("\"version_release\" : \"" + Build.VERSION.RELEASE + "\",")
-                        .concat("\n\"version_incremental\" : \"" + Build.VERSION.INCREMENTAL + "\",")
+                        .concat("\"user_id\" : \"" + getUniquePsuedoID() + "\",")
+                        .concat("\n\"device_brand\" : \"" + Build.BRAND + "\",")
+                        .concat("\n\"device_model\" : \"" + Build.MODEL + "\",")
+                        .concat("\n\"build_number\" : \"" + Build.ID + "\",")
+                        .concat("\n\"version_release\" : \"" + Build.VERSION.RELEASE + "\",")
                         .concat("\n\"version_sdk\" : \"" + Build.VERSION.SDK + "\",")
-                        .concat("\n\"board\" : \"" + Build.BOARD + "\",")
-                        .concat("\n\"brand\" : \"" + Build.BRAND + "\",")
-                        .concat("\n\"device\" : \"" + Build.DEVICE + "\",")
-                        .concat("\n\"fingerprint\" : \"" + Build.FINGERPRINT + "\",")
-                        .concat("\n\"host\" : \"" + Build.HOST + "\",")
-                        .concat("\n\"id(build number)\" : \"" + Build.ID + "\"")
+                        .concat("\n\"version_incremental\" : \"" + Build.VERSION.INCREMENTAL + "\",")
+                        .concat("\n\"system_language\" : \"" + getSystemLanguage() + "\"")
                         .concat("}");
         return String.valueOf(mString);
     }
