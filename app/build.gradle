@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+import org.apache.commons.io.FileUtils;
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -25,4 +27,41 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation'commons-io:commons-io:2.6'
+}
+
+
+class convertToYMLibTask extends DefaultTask {
+
+    @TaskAction
+    def greet() {
+        println "hello"
+            File source = new File("D:\\Test\\TestApplication");
+            File dest = new File("D:\\Test\\TestApplication\\ymlib");
+            try {
+                FileUtils.copyDirectory(source, dest);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+}
+
+task greeting(type: convertToYMLibTask)
+
+task greet(){
+    doLast{
+        println "hello"
+    }
+}
+
+task cleanup dependsOn greet {
+    println 'deleting generated lib project'
+    File delete_Generated_LibDir = new File("../ymlib");
+    try{
+        FileUtils.deleteDirectory(delete_Generated_LibDir)
+    }catch(IOException e) {
+        e.printStackTrace()
+    }
 }
